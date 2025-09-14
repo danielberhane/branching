@@ -2,7 +2,7 @@
 
 import sys
 import time
-from sorting import bubble_sort, quick_sort
+from sorting import bubble_sort, quick_sort, merge_sort
 
 class Colors:
     """ANSI color codes for pretty output"""
@@ -155,6 +155,39 @@ def test_in_place_modification():
     else:
         print(f"{Colors.RED}❌ Array not correctly sorted{Colors.RESET}")
 
+def test_merge_sort():
+    """Test merge sort specifically"""
+    print("\n{}{}=== MERGE SORT TESTS ==={}".format(Colors.BOLD, Colors.BLUE, Colors.RESET))
+    
+    test_cases = [
+        ("Empty array", [], []),
+        ("Single element", [42], [42]),
+        ("Two elements", [2, 1], [1, 2]),
+        ("Already sorted", [1, 2, 3, 4, 5], [1, 2, 3, 4, 5]),
+        ("Reverse sorted", [5, 4, 3, 2, 1], [1, 2, 3, 4, 5]),
+        ("Random array", [64, 34, 25, 12, 22, 11, 90], [11, 12, 22, 25, 34, 64, 90]),
+        ("Duplicates", [5, 2, 8, 2, 9, 1, 5, 5], [1, 2, 2, 5, 5, 5, 8, 9]),
+        ("Negative numbers", [-3, -1, -7, -2], [-7, -3, -2, -1]),
+    ]
+    
+    passed = 0
+    failed = 0
+    
+    for test_name, input_arr, expected in test_cases:
+        input_copy = input_arr.copy()
+        result = merge_sort(input_copy)
+        
+        if result == expected:
+            print("{} {}: PASSED{}".format(Colors.GREEN, test_name, Colors.RESET))
+            passed += 1
+        else:
+            print("{} {}: FAILED{}".format(Colors.RED, test_name, Colors.RESET))
+            print("   Expected: {}, Got: {}".format(expected, result))
+            failed += 1
+    
+    print("Merge Sort: {} passed, {} failed".format(passed, failed))
+    return passed, failed
+
 
 def test_quick_sort():
     """Test quick sort specifically"""
@@ -218,3 +251,8 @@ def main():
     quick_passed, quick_failed = test_quick_sort()
     total_passed += quick_passed
     total_failed += quick_failed
+
+    # Add after quick sort tests
+    merge_passed, merge_failed = test_merge_sort()
+    total_passed += merge_passed
+    total_failed += merge_failed
