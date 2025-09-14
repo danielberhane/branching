@@ -2,7 +2,7 @@
 
 import sys
 import time
-from sorting import bubble_sort, quick_sort
+from sorting import bubble_sort, quick_sort, merge_sort
 
 class Colors:
     """ANSI color codes for pretty output"""
@@ -218,3 +218,8 @@ def main():
     quick_passed, quick_failed = test_quick_sort()
     total_passed += quick_passed
     total_failed += quick_failed
+
+    # Add after quick sort tests
+    merge_passed, merge_failed = test_merge_sort()
+    total_passed += merge_passed
+    total_failed += merge_failed
